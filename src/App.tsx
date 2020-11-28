@@ -16,8 +16,6 @@ export const App: React.FC = observer(() => {
                 }}>
                 Movie Net
             </h1>
-
-            <H1>Harry Potter</H1>
         </div>
     );
 });
