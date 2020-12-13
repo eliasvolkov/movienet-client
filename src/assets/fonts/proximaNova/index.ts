@@ -1,6 +1,6 @@
 export const proximaNovaFont = `
 @font-face {
-    font-family: 'Proxima Nova Bl';
+    font-family: 'Proxima Nova';
     src: url('ProximaNova-Black.eot');
     src: local('Proxima Nova Black'), local('ProximaNova-Black'),
     url('ProximaNova-Black.eot?#iefix') format('embedded-opentype'),
@@ -11,7 +11,7 @@ export const proximaNovaFont = `
 }
 
 @font-face {
-    font-family: 'Proxima Nova Eb';
+    font-family: 'Proxima Nova';
     src: url('ProximaNova-Extrabld.eot');
     src: local('Proxima Nova Extrabold'), local('ProximaNova-Extrabld'),
     url('ProximaNova-Extrabld.eot?#iefix') format('embedded-opentype'),
@@ -22,7 +22,7 @@ export const proximaNovaFont = `
 }
 
 @font-face {
-    font-family: 'Proxima Nova Bd';
+    font-family: 'Proxima Nova';
     src: url('ProximaNova-Bold.eot');
     src: local('Proxima Nova Bold'), local('ProximaNova-Bold'),
     url('ProximaNova-Bold.eot?#iefix') format('embedded-opentype'),
@@ -33,7 +33,7 @@ export const proximaNovaFont = `
 }
 
 @font-face {
-    font-family: 'Proxima Nova Lt';
+    font-family: 'Proxima Nova';
     src: url('ProximaNova-Light.eot');
     src: local('Proxima Nova Light'), local('ProximaNova-Light'),
     url('ProximaNova-Light.eot?#iefix') format('embedded-opentype'),
@@ -44,7 +44,7 @@ export const proximaNovaFont = `
 }
 
 @font-face {
-    font-family: 'Proxima Nova Th';
+    font-family: 'Proxima Nova';
     src: url('ProximaNovaT-Thin.eot');
     src: local('Proxima NovaT Thin'), local('ProximaNovaT-Thin'),
     url('ProximaNovaT-Thin.eot?#iefix') format('embedded-opentype'),
@@ -55,7 +55,7 @@ export const proximaNovaFont = `
 }
 
 @font-face {
-    font-family: 'Proxima Nova Sb';
+    font-family: 'Proxima Nova';
     src: url('ProximaNova-Semibold.eot');
     src: local('Proxima Nova Semibold'), local('ProximaNova-Semibold'),
     url('ProximaNova-Semibold.eot?#iefix') format('embedded-opentype'),
@@ -66,7 +66,7 @@ export const proximaNovaFont = `
 }
 
 @font-face {
-    font-family: 'Proxima Nova Rg';
+    font-family: 'Proxima Nova';
     src: url('ProximaNova-Regular.eot');
     src: url('ProximaNova-Regular.eot?#iefix') format('embedded-opentype'),
     url('ProximaNova-Regular.woff') format('woff'),
