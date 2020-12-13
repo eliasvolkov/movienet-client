@@ -6,7 +6,7 @@ module.exports = ({ config }) => {
                 loader: require.resolve("awesome-typescript-loader"),
                 options: {
                     presets: [["react-app", { flow: false, typescript: true }]],
-                    configFileName: "./.storybook/tsconfig.json"
+                    configFileName: "./tsconfig.json"
                 }
             },
             {

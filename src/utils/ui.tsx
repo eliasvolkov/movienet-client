@@ -1,3 +1,4 @@
+import React from 'react';
 import facepaint from 'facepaint';
 import { BREAKPOINTS } from '../constants';
 

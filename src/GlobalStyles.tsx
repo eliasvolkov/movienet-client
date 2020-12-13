@@ -1,12 +1,12 @@
-import { injectGlobal } from '@emotion/css';
+import { createGlobalStyle } from 'styled-components';
 import { CirceFont } from './assets/fonts/circe';
 import { proximaNovaFont } from './assets/fonts/proximaNova';
 
-export const GlobalStyles = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    injectGlobal`
+export const GlobalStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
   ${CirceFont}
   ${proximaNovaFont}
@@ -16,7 +16,4 @@ export const GlobalStyles = () => {
       font-weight: normal;
       color: #fff;
   }
-  
 `;
-    return null;
-};

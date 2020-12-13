@@ -7,7 +7,9 @@ export const App: React.FC = observer(() => {
     return (
         <div>
             <GlobalStyles />
-
+            <div style={{ flex: 1 }}>
+                <H1>Harry Potter and the Prisoner of Azkaban </H1>
+            </div>
             <h1
                 style={{
                     fontFamily: 'Circe',

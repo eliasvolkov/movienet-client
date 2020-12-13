@@ -30,6 +30,7 @@ module.exports = {
         'linebreak-style': 'off',
         'import/prefer-default-export': 'off',
         'import/no-default-export': 'error',
+        'react-hooks/exhaustive-deps': 'off',
         'no-param-reassign': 'off',
         'prettier/prettier': [
             'error',
