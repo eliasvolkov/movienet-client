@@ -6,8 +6,5 @@ export const P1 = styled.p`
     line-height: 1.5;
     font-weight: 100;
     letter-spacing: 0.02em;
-
-    ${mq({
-        fontSize: [14, 12, 10, 10, 10],
-    })}
+    font-size: 1.8rem;
 `;

@@ -7,6 +7,6 @@ export const H3 = styled.h3`
     font-weight: 700;
 
     ${mq({
-        fontSize: [26, 48, 32, 24, 24],
+        fontSize: [14, 18, 32, 24, 24, 48],
     })}
 `;

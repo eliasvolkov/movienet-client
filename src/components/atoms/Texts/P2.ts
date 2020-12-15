@@ -6,8 +6,9 @@ export const P2 = styled.p`
     line-height: 1.5;
     font-weight: 400;
     letter-spacing: 0.02em;
-
-    ${mq({
-        fontSize: [14, 12, 10, 10, 10],
-    })}
+    font-size: 1.4rem;
 `;
+
+// ${mq({
+//         fontSize: ['1rem', '1.4rem', '1.4rem'],
+//     })}

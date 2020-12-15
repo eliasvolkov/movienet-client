@@ -8,6 +8,6 @@ export const H4 = styled.h4`
     letter-spacing: 0.02em;
 
     ${mq({
-        fontSize: [18, 48, 32, 24, 24],
+        fontSize: [10, 12, 14, 16, 18, 24],
     })}
 `;
