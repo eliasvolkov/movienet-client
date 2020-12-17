@@ -17,7 +17,9 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-emotion": "^10.0.0",
+    "react-flexa": "^0.9.1",
     "react-raster": "^6.0.10",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "styled-components": "^5.2.1",
     "typescript": "3.9.3"
@@ -62,6 +64,7 @@
     "@types/facepaint": "^1.2.1",
     "@types/jsdom": "^12.2.2",
     "@types/lodash": "^4.14.165",
+    "@types/react-router-dom": "^5.1.6",
     "@types/storybook__react": "^5.2.1",
     "@types/styled-components": "^5.1.4",
     "@typescript-eslint/eslint-plugin": "^4.8.2",

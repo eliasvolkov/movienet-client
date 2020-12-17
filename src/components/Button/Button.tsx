@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { COLORS } from '../../constants';
 
 type Props = {
     children: React.ReactNode;
@@ -28,6 +29,7 @@ const StyledButton = styled.button<IStyledButton>`
             return {
                 backgroundColor: 'rgba(254,181,59,0.8)',
                 border: '1px solid #feb52b',
+                color: COLORS.BGC,
             };
         }
 

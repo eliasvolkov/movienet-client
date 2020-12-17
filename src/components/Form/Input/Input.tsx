@@ -73,7 +73,7 @@ const StyledInput = styled.input<IStyledInput>`
     }};
 
     color: #fdfdfd;
-    font-family: 'Circe';
+    font-family: 'Circe', sans-serif;
     font-weight: 300;
     font-size: 1.8rem;
 

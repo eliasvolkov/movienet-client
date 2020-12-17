@@ -12,6 +12,10 @@ export const GlobalStyles = createGlobalStyle`
   
   ${CirceFont}
   ${proximaNovaFont}
+  a{
+    text-decoration: none;
+    color: inherit;
+  }
   
   html{
     ${mq({
@@ -29,7 +33,7 @@ export const GlobalStyles = createGlobalStyle`
   }
   body {
       background-color: #2a2929;
-      font-family: 'Proxima Nova Rg';
+      font-family: 'Proxima Nova Rg', sans-serif;
       font-weight: normal;
       color: #fff;
   }
