@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro';
-import { mq } from 'utils/ui';
 
 export const P2 = styled.p`
     font-family: 'Proxima Nova';
@@ -8,7 +7,3 @@ export const P2 = styled.p`
     letter-spacing: 0.02em;
     font-size: 1.4rem;
 `;
-
-// ${mq({
-//         fontSize: ['1rem', '1.4rem', '1.4rem'],
-//     })}

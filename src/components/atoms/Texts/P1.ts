@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro';
-import { mq } from 'utils/ui';
 
 export const P1 = styled.p`
     font-family: 'Circe';
