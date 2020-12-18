@@ -25,7 +25,7 @@ export const GlobalStyles = createGlobalStyle`
             '40.5%',
             '42.5%',
             '42.5%',
-            '62.5%',
+            '52.5%',
             '62.5%',
             '62.5%',
         ],
