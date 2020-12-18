@@ -5,6 +5,7 @@ import { IPad } from '../../../constants';
 
 export const MobileNavWrapper = styled.nav`
     margin-left: auto;
+    min-height: 100%;
     @media (min-width: ${IPad}px) {
         display: none;
     }
@@ -18,6 +19,10 @@ export const MenuIcon = styled(Menu)`
 export const CloseIcon = styled(CloseOutline)`
     margin-left: 1.6rem;
     cursor: pointer;
+    z-index: 7;
+    position: absolute;
+    top: 15px;
+    right: 15px;
 `;
 
 export const IconsWrapper = styled.div`
@@ -29,15 +34,23 @@ interface INavWrapper {
     isOpen: boolean;
 }
 
+export const Scroll = styled.div<INavWrapper>`
+    height: 100vh;
+    overflow-y: scroll;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
+    flexdirection: 'column';
+    background-color: rgba(17, 17, 19, 0.96);
+`;
+
 export const NavWrapper = styled.nav<INavWrapper>`
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-end;
-    background-color: rgba(17, 17, 19, 0.96);
-    overflow: hidden;
-    position: fixed;
-    top: 8rem;
-    right: 0;
+
     ${({ isOpen }) => {
         if (isOpen) {
             return {
@@ -50,11 +63,9 @@ export const NavWrapper = styled.nav<INavWrapper>`
             width: '0%',
             height: '0',
         };
-    }}
-
+    }};
     @media (min-width: ${IPad}px) {
         display: none;
     }
-
-    z-index: 100;
+    z-index: 3;
 `;

@@ -18,13 +18,14 @@ export const GlobalStyles = createGlobalStyle`
   }
   
   html{
+    
     ${mq({
         fontSize: [
-            '22.5%',
+            '32.5%',
             '42.5%',
-            '40.5%',
-            '42.5%',
-            '42.5%',
+            '46.5%',
+            '48.5%',
+            '50.5%',
             '52.5%',
             '62.5%',
             '62.5%',
@@ -36,5 +37,6 @@ export const GlobalStyles = createGlobalStyle`
       font-family: 'Proxima Nova Rg', sans-serif;
       font-weight: normal;
       color: #fff;
+      //overflow: hidden;
   }
 `;

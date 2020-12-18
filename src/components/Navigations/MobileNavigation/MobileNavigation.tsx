@@ -11,6 +11,7 @@ import {
     CloseIcon,
     NavWrapper,
     MenuIcon,
+    Scroll,
 } from './MobileNavigation.styles';
 import { Avatar } from '../../Avatar/Avatar';
 
@@ -31,22 +32,23 @@ export const MobileNavigation = () => {
     return (
         <MobileNavWrapper>
             <IconsWrapper>
-                {!isOpen && <Search size={26} />}
-
-                {isOpen ? (
-                    <CloseIcon size={34} onClick={handleDrawer} />
-                ) : (
-                    <MenuIcon size={32} onClick={handleDrawer} />
+                {!isOpen && (
+                    <>
+                        <Search size={26} />
+                        <MenuIcon size={32} onClick={handleDrawer} />
+                    </>
                 )}
             </IconsWrapper>
-
-            <NavWrapper isOpen={isOpen}>
-                <MainNavigation links={MAIN_LINKS} />
-                <AvatarWrapper>
-                    <Avatar />
-                    <AccountNavigation links={ACCOUNT_LINKS} />
-                </AvatarWrapper>
-            </NavWrapper>
+            <Scroll isOpen={isOpen}>
+                <CloseIcon size={34} onClick={handleDrawer} />
+                <NavWrapper isOpen={isOpen}>
+                    <MainNavigation links={MAIN_LINKS} />
+                    <AvatarWrapper>
+                        <Avatar />
+                        <AccountNavigation links={ACCOUNT_LINKS} />
+                    </AvatarWrapper>
+                </NavWrapper>
+            </Scroll>
         </MobileNavWrapper>
     );
 };

@@ -7,12 +7,11 @@ export const HeaderWrapper = styled.header`
 
     width: 100%;
     height: 8rem;
-    position: fixed;
+    position: absolute;
     top: 0;
     padding: 2rem;
 
-    z-index: 15;
-    background-color: rgba(31, 33, 37, 1);
+    z-index: 3;
 
     @media (min-width: ${IPad}px) {
         padding: 4rem;
@@ -39,7 +38,7 @@ export const AvatarWrapper = styled.div`
     flex-wrap: wrap;
     flex-direction: column;
     background-color: rgba(31, 33, 37, 0.92);
-    padding: 1rem 4rem;
+    padding: 6rem 4rem;
     @media (min-width: ${IPad}px) {
         min-height: 100vh;
         position: absolute;
