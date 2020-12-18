@@ -17,11 +17,11 @@ export const App: React.FC = observer(() => {
             <GlobalStyles />
             <Router>
                 <Header />
-                {/* <Switch> */}
-                {/*    <Route path="/signin" component={SignInPage} /> */}
-                {/*    <Route path="/signup" component={SignUpPage} /> */}
-                {/*    <Redirect from="/" to="/signin" /> */}
-                {/* </Switch> */}
+                <Switch>
+                    <Route path="/signin" component={SignInPage} />
+                    <Route path="/signup" component={SignUpPage} />
+                    <Redirect from="/" to="/signin" />
+                </Switch>
             </Router>
         </>
     );

@@ -1,0 +1,29 @@
+import React from 'react';
+import {
+    StyledAvatar,
+    AvatarWrapper,
+    Background,
+    Wrapper,
+    StyledName,
+} from './Avatar.styles';
+
+type Props = {
+    image?: string;
+    name?: string;
+};
+
+export const Avatar: React.FC<Props> = ({
+    image,
+    name = 'John Dou',
+}: Props) => {
+    return (
+        <Wrapper>
+            <AvatarWrapper>
+                <Background>
+                    <StyledAvatar src="https://s80658.cdn.ngenix.net/resize/%7BSIZE%7D/_stor_/cms/content-contentasset/a/c1/af1a4ee99d50ef3e5e09ed7d2730bac1-15191-db7e26d4426a4ee8ba1dbb6cbc009c67.jpg" />
+                </Background>
+            </AvatarWrapper>
+            <StyledName>{name}</StyledName>
+        </Wrapper>
+    );
+};
