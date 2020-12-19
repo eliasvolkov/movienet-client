@@ -1,23 +1,28 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
+import { SignInPage } from 'features/auth/SignInPage';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+} from 'react-router-dom';
 import { GlobalStyles } from './GlobalStyles';
-import { H1 } from './components/atoms/Texts/H1';
+import { SignUpPage } from './features/auth/SignUpPage';
+import { Header } from './components/Header/Header';
 
 export const App: React.FC = observer(() => {
     return (
-        <div>
+        <>
             <GlobalStyles />
-            <div style={{ flex: 1 }}>
-                <H1>Harry Potter and the Prisoner of Azkaban </H1>
-            </div>
-            <h1
-                style={{
-                    fontFamily: 'Circe',
-                    fontWeight: 100,
-                    textAlign: 'center',
-                }}>
-                Movie Net
-            </h1>
-        </div>
+            <Router>
+                <Header />
+                <Switch>
+                    <Route path="/signin" component={SignInPage} />
+                    <Route path="/signup" component={SignUpPage} />
+                    <Redirect from="/" to="/signin" />
+                </Switch>
+            </Router>
+        </>
     );
 });

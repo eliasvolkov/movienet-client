@@ -32,6 +32,9 @@ module.exports = {
         'import/no-default-export': 'error',
         'react-hooks/exhaustive-deps': 'off',
         'no-param-reassign': 'off',
+        '@typescript-eslint/no-use-before-define': 'off',
+        'react/no-unused-prop-types': 'off',
+        'react/require-default-props': 'off',
         'prettier/prettier': [
             'error',
             {
