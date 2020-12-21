@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components/macro';
 import { MD } from '../../constants';
 import { SliderItem } from './SliderItem';
@@ -6,12 +6,29 @@ import { SliderItem } from './SliderItem';
 export const SimpleSlider = () => {
     const data = new Array(10).fill(0);
     const [currentOrder, setCurrentOrder] = useState(1);
+    const [elementsInRow, setElementsInRow] = useState(0);
     const [orderOfChosenElement, setOrderOfChosenElement] = useState(0);
     const [count, setCount] = useState(0);
+    const [wrapperWidth, setWrapperWidth] = useState(0);
     const ELEMENTS_IN_ROW = 3;
 
+    console.log('elementsInRow', elementsInRow);
+
+    const wrapperRef: any = useRef();
+    const divRef: any = useRef();
+
+    useEffect(() => {
+        calculateElementsInRow();
+    }, []);
+
+    useEffect(() => {
+        window.addEventListener('resize', calculateElementsInRow);
+        return () =>
+            window.removeEventListener('resize', calculateElementsInRow);
+    }, []);
+
     const onRightClick = () => {
-        setCurrentOrder(currentOrder + ELEMENTS_IN_ROW);
+        setCurrentOrder(currentOrder + elementsInRow);
         setCount(count + 1);
     };
 
@@ -19,35 +36,51 @@ export const SimpleSlider = () => {
         if (currentOrder === 1 || count === 0) {
             return;
         }
-        setCurrentOrder(currentOrder - ELEMENTS_IN_ROW);
+        setCurrentOrder(currentOrder - elementsInRow);
         setCount(count - 1);
     };
 
     const handleClick = (index: number) => {
         setOrderOfChosenElement(index);
     };
+
+    const calculateElementsInRow = () => {
+        if (wrapperRef && wrapperRef.current && divRef && divRef.current) {
+            setElementsInRow(
+                Math.ceil(
+                    wrapperRef.current.offsetWidth / divRef.current.offsetWidth,
+                ),
+            );
+            setWrapperWidth(wrapperRef.current.offsetWidth);
+        }
+    };
     return (
         <div style={{ position: 'relative' }}>
             <ArrowLeft onClick={onLeftClick} />
             <ArrowRight onClick={onRightClick} />
-            <Wrapper>
+            <Wrapper ref={wrapperRef}>
                 {data.map((item, index) => {
                     const elementOrder = index + 1;
                     return (
-                        <SliderItem
-                            orderOfChosenElement={orderOfChosenElement}
-                            handleClick={handleClick}
-                            swipeCoff={count}
-                            elementsInRow={ELEMENTS_IN_ROW}
-                            order={elementOrder}
-                            shouldTransform={
-                                currentOrder > 1 && elementOrder < currentOrder
-                            }
-                            shouldAppear={
-                                currentOrder > 1 && elementOrder >= currentOrder
-                            }>
-                            {index + 1}
-                        </SliderItem>
+                        <div ref={divRef}>
+                            <SliderItem
+                                // getWidth={calculateElementsInRow}
+                                orderOfChosenElement={orderOfChosenElement}
+                                handleClick={handleClick}
+                                swipeCoff={count}
+                                elementsInRow={elementsInRow}
+                                order={elementOrder}
+                                shouldTransform={
+                                    currentOrder > 1 &&
+                                    elementOrder < currentOrder
+                                }
+                                shouldAppear={
+                                    currentOrder > 1 &&
+                                    elementOrder >= currentOrder
+                                }>
+                                {index + 1}
+                            </SliderItem>
+                        </div>
                     );
                 })}
             </Wrapper>

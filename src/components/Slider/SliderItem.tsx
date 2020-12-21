@@ -12,6 +12,7 @@ type Props = {
     elementsInRow: number;
     handleClick: (index: number) => void;
     orderOfChosenElement: number;
+    // getWidth: (width: number) => void;
 };
 
 const calculateTranslate = (elementsInRow: number) => {
@@ -27,13 +28,18 @@ export const SliderItem = ({
     elementsInRow,
     handleClick,
     orderOfChosenElement,
-}: Props) => {
+}: // getWidth,
+Props) => {
     const ref: any = useRef();
     const [width, setWidth] = useState(0);
 
     useEffect(() => {
         setWidth(ref.current.offsetWidth);
     }, []);
+
+    useEffect(() => {
+        // getWidth(width);
+    }, [width]);
 
     const onClick = () => {
         handleClick(orderOfChosenElement === order ? 0 : order);
@@ -121,15 +127,13 @@ const StyledItem = styled.div<IItem>`
         shouldMoveRight,
         width,
     }) => {
-        if (shouldMoveLeft || shouldMoveRight) {
-            return {
-                transform: `translateX(${
-                    shouldMoveLeft
-                        ? `${swipeCoff * -25}%`
-                        : `${swipeCoff * 25}%`
-                })`,
-            };
-        }
+        // if (shouldMoveLeft || shouldMoveRight) {
+        //     return {
+        //         transform: `translateX(${
+        //             shouldMoveLeft ? `${1 * -25}%` : `${1 * 25}%`
+        //         })`,
+        //     };
+        // }
         if (isSelected && shouldAppear) {
             return {
                 transform: `scale(1.5) translateX(-${
