@@ -4,37 +4,45 @@ import { SliderItem } from './SliderItem';
 
 export const SimpleSlider = () => {
     const data = new Array(10).fill(0);
-    const [activeIndex, setActiveIndex] = useState(1);
+    const [currentOrder, setCurrentOrder] = useState(1);
+    const [activeElement, setActiveElement] = useState(0);
     const [count, setCount] = useState(0);
-    const ELEMENTS_IN_ROW = 1;
+    const ELEMENTS_IN_ROW = 4;
 
     const onRightClick = () => {
-        setActiveIndex(activeIndex + ELEMENTS_IN_ROW);
+        setCurrentOrder(currentOrder + ELEMENTS_IN_ROW);
         setCount(count + 1);
     };
 
     const onLeftClick = () => {
-        if (activeIndex === 1 || count === 0) {
+        if (currentOrder === 1 || count === 0) {
             return;
         }
-        setActiveIndex(activeIndex - ELEMENTS_IN_ROW);
+        setCurrentOrder(currentOrder - ELEMENTS_IN_ROW);
         setCount(count - 1);
+    };
+
+    const handleClick = (index: number) => {
+        setActiveElement(index);
     };
     return (
         <Wrapper>
             <ArrowLeft onClick={onLeftClick} />
             <ArrowRight onClick={onRightClick} />
             {data.map((item, index) => {
+                const elementOrder = index + 1;
                 return (
                     <SliderItem
+                        activeElement={activeElement}
+                        handleClick={handleClick}
                         swipeCoff={count}
                         elementsInRow={ELEMENTS_IN_ROW}
-                        index={index + 1}
+                        order={elementOrder}
                         shouldTransform={
-                            activeIndex > 1 && index + 1 < activeIndex
+                            currentOrder > 1 && elementOrder < currentOrder
                         }
                         shouldAppear={
-                            activeIndex > 1 && index + 1 >= activeIndex
+                            currentOrder > 1 && elementOrder >= currentOrder
                         }>
                         {index + 1}
                     </SliderItem>
@@ -69,9 +77,7 @@ const Wrapper = styled.div`
     flex-wrap: nowrap;
     overflow-x: hidden;
     position: relative;
+    padding: 0 10rem;
 
     z-index: 1;
 `;
-interface IItem {
-    isClicked?: boolean;
-}

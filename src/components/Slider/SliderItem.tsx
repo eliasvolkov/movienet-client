@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components/macro';
+import { useOnClickOutside } from '../../hooks/useClickOutside';
 
 type Props = {
     children: React.ReactNode;
     shouldTransform?: boolean;
     shouldAppear?: boolean;
-    index: number;
+    order: number;
     swipeCoff: number;
     elementsInRow: number;
+    handleClick: (index: number) => void;
+    activeElement: number;
 };
 
 const calculateTranslate = (elementsInRow: number) => {
@@ -17,21 +20,38 @@ const calculateTranslate = (elementsInRow: number) => {
 export const SliderItem = ({
     children,
     shouldTransform,
-    index,
+    order,
     shouldAppear,
     swipeCoff,
     elementsInRow,
+    handleClick,
+    activeElement,
 }: Props) => {
-    const [isSelected, setIsSelected] = useState(false);
+    const ref: any = useRef();
+
+    const onClick = () => {
+        handleClick(activeElement === order ? 0 : order);
+    };
+
+    const reset = () => {
+        if (activeElement === order) {
+            handleClick(0);
+        }
+    };
+    useOnClickOutside(ref, () => reset());
+
     return (
         <StyledItem
-            index={index}
+            ref={ref}
+            order={order}
             swipeCoff={swipeCoff}
             elementsInRow={elementsInRow}
             shouldAppear={shouldAppear}
-            isSelected={isSelected}
+            isSelected={activeElement === order}
+            shouldMoveLeft={order < activeElement}
+            shouldMoveRight={activeElement > 0 && order > activeElement}
             shouldTransform={shouldTransform}
-            onClick={() => setIsSelected(!isSelected)}>
+            onClick={onClick}>
             {children}
         </StyledItem>
     );
@@ -42,7 +62,9 @@ interface IItem {
     isSelected?: boolean;
     shouldTransform?: boolean;
     shouldAppear?: boolean;
-    index: number;
+    shouldMoveLeft?: boolean;
+    shouldMoveRight?: boolean;
+    order: number;
     swipeCoff: number;
     elementsInRow: number;
 }
@@ -59,12 +81,19 @@ const StyledItem = styled.div<IItem>`
 
     ${({
         shouldTransform,
-        index,
+        order,
         shouldAppear,
         swipeCoff,
         isSelected,
         elementsInRow,
+        shouldMoveLeft,
+        shouldMoveRight,
     }) => {
+        if (shouldMoveLeft || shouldMoveRight) {
+            return {
+                transform: `translateX(${shouldMoveLeft ? '-25%' : '25%'})`,
+            };
+        }
         if (isSelected && shouldAppear) {
             return {
                 transform: `scale(1.5) translateX(-${
@@ -74,7 +103,7 @@ const StyledItem = styled.div<IItem>`
         }
         if (shouldTransform) {
             return {
-                transform: `translateX(-${index * 35}rem)`,
+                transform: `translateX(-${order * 35}rem)`,
             };
         }
         if (shouldAppear) {
