@@ -5,7 +5,7 @@ import { SliderItem } from './SliderItem';
 export const SimpleSlider = () => {
     const data = new Array(10).fill(0);
     const [currentOrder, setCurrentOrder] = useState(1);
-    const [activeElement, setActiveElement] = useState(0);
+    const [orderOfChosenElement, setOrderOfChosenElement] = useState(0);
     const [count, setCount] = useState(0);
     const ELEMENTS_IN_ROW = 4;
 
@@ -23,7 +23,7 @@ export const SimpleSlider = () => {
     };
 
     const handleClick = (index: number) => {
-        setActiveElement(index);
+        setOrderOfChosenElement(index);
     };
     return (
         <Wrapper>
@@ -33,7 +33,7 @@ export const SimpleSlider = () => {
                 const elementOrder = index + 1;
                 return (
                     <SliderItem
-                        activeElement={activeElement}
+                        orderOfChosenElement={orderOfChosenElement}
                         handleClick={handleClick}
                         swipeCoff={count}
                         elementsInRow={ELEMENTS_IN_ROW}
@@ -77,7 +77,6 @@ const Wrapper = styled.div`
     flex-wrap: nowrap;
     overflow-x: hidden;
     position: relative;
-    padding: 0 10rem;
 
     z-index: 1;
 `;
