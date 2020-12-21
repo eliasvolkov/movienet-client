@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components/macro';
 import { useOnClickOutside } from '../../hooks/useClickOutside';
+import { mq } from '../../utils/ui';
 
 type Props = {
     children: React.ReactNode;
@@ -79,8 +80,28 @@ interface IItem {
     elementsInRow: number;
 }
 const StyledItem = styled.div<IItem>`
-    min-width: 22rem;
-    height: 13rem;
+    ${mq({
+        minWidth: [
+            '22rem',
+            '20rem',
+            '20rem',
+            '20rem',
+            '22rem',
+            '26rem',
+            '28rem',
+            '30rem',
+        ],
+        height: [
+            '12rem',
+            '12rem',
+            '12rem',
+            '12rem',
+            '12rem',
+            '16rem',
+            '16rem',
+            '18rem',
+        ],
+    })};
     background-color: #919191;
     margin-left: 0.4rem;
     display: flex;
@@ -102,7 +123,11 @@ const StyledItem = styled.div<IItem>`
     }) => {
         if (shouldMoveLeft || shouldMoveRight) {
             return {
-                transform: `translateX(${shouldMoveLeft ? '-25%' : '25%'})`,
+                transform: `translateX(${
+                    shouldMoveLeft
+                        ? `${swipeCoff * -25}%`
+                        : `${swipeCoff * 25}%`
+                })`,
             };
         }
         if (isSelected && shouldAppear) {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
+import { MD } from '../../constants';
 import { SliderItem } from './SliderItem';
 
 export const SimpleSlider = () => {
@@ -7,7 +8,7 @@ export const SimpleSlider = () => {
     const [currentOrder, setCurrentOrder] = useState(1);
     const [orderOfChosenElement, setOrderOfChosenElement] = useState(0);
     const [count, setCount] = useState(0);
-    const ELEMENTS_IN_ROW = 4;
+    const ELEMENTS_IN_ROW = 3;
 
     const onRightClick = () => {
         setCurrentOrder(currentOrder + ELEMENTS_IN_ROW);
@@ -26,29 +27,31 @@ export const SimpleSlider = () => {
         setOrderOfChosenElement(index);
     };
     return (
-        <Wrapper>
+        <div style={{ position: 'relative' }}>
             <ArrowLeft onClick={onLeftClick} />
             <ArrowRight onClick={onRightClick} />
-            {data.map((item, index) => {
-                const elementOrder = index + 1;
-                return (
-                    <SliderItem
-                        orderOfChosenElement={orderOfChosenElement}
-                        handleClick={handleClick}
-                        swipeCoff={count}
-                        elementsInRow={ELEMENTS_IN_ROW}
-                        order={elementOrder}
-                        shouldTransform={
-                            currentOrder > 1 && elementOrder < currentOrder
-                        }
-                        shouldAppear={
-                            currentOrder > 1 && elementOrder >= currentOrder
-                        }>
-                        {index + 1}
-                    </SliderItem>
-                );
-            })}
-        </Wrapper>
+            <Wrapper>
+                {data.map((item, index) => {
+                    const elementOrder = index + 1;
+                    return (
+                        <SliderItem
+                            orderOfChosenElement={orderOfChosenElement}
+                            handleClick={handleClick}
+                            swipeCoff={count}
+                            elementsInRow={ELEMENTS_IN_ROW}
+                            order={elementOrder}
+                            shouldTransform={
+                                currentOrder > 1 && elementOrder < currentOrder
+                            }
+                            shouldAppear={
+                                currentOrder > 1 && elementOrder >= currentOrder
+                            }>
+                            {index + 1}
+                        </SliderItem>
+                    );
+                })}
+            </Wrapper>
+        </div>
     );
 };
 
@@ -70,13 +73,17 @@ const ArrowLeft = styled.div`
     left: 0;
 `;
 const Wrapper = styled.div`
+    width: 100%;
     height: 400px;
     background-color: #434343;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    overflow-x: hidden;
-    position: relative;
+    overflow-x: scroll;
+
+    @media (min-width: ${MD}px) {
+        overflow-x: hidden;
+    }
 
     z-index: 1;
 `;
