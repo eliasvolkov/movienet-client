@@ -37,6 +37,5 @@ export const GlobalStyles = createGlobalStyle`
       font-family: 'Proxima Nova Rg', sans-serif;
       font-weight: normal;
       color: #fff;
-      //overflow: hidden;
   }
 `;

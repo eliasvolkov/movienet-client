@@ -3,4 +3,9 @@ import { storiesOf } from '@storybook/react';
 
 import { SimpleSlider } from './Slider';
 
-storiesOf('Slider', module).add('Movies', () => <SimpleSlider />);
+storiesOf('Slider', module).add('Movies', () => (
+    <>
+        <SimpleSlider />
+        <SimpleSlider />
+    </>
+));

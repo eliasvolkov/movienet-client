@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components/macro';
 import { debounce } from 'lodash';
-import { MD } from '../../constants';
 import { SliderItem } from './SliderItem';
 
 const DEBOUNCE_TIME = 300;
@@ -89,9 +88,14 @@ export const SimpleSlider = () => {
     );
 
     return (
-        <div style={{ position: 'relative' }}>
-            <ArrowLeft onClick={onLeftArrow} />
-            <ArrowRight onClick={onRightArrow} />
+        <Mask>
+            {count > 1 && orderOfChosenElement === 0 && (
+                <ArrowLeft onClick={onLeftArrow}>GO</ArrowLeft>
+            )}
+            {isRightScrollAvailable && orderOfChosenElement === 0 && (
+                <ArrowRight onClick={onRightArrow}>GO</ArrowRight>
+            )}
+
             <Wrapper ref={wrapperRef}>
                 {data.map((item, index) => {
                     const elementOrder = index + 1;
@@ -107,39 +111,81 @@ export const SimpleSlider = () => {
                     );
                 })}
             </Wrapper>
-        </div>
+        </Mask>
     );
 };
 
 const ArrowRight = styled.div`
-    width: 40px;
-    height: 40px;
-    background-color: #e97171;
+    height: 100%;
+    width: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
-    top: 0;
+    font-size: 3rem;
     right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.5s;
 `;
 
 const ArrowLeft = styled.div`
-    width: 40px;
-    height: 40px;
-    background-color: #e97171;
+    height: 100%;
+    width: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
     position: absolute;
-    top: 0;
+    top: 50%;
+    transform: translate(0, -50%);
     left: 0;
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.5s;
 `;
+
+const Mask = styled.div`
+    width: 100%;
+    position: relative;
+    &:hover ${ArrowRight} {
+        opacity: 1;
+        z-index: 7;
+    }
+
+    &:hover ${ArrowLeft} {
+        opacity: 1;
+        z-index: 7;
+    }
+    z-index: 1;
+`;
+
 const Wrapper = styled.div`
     width: 100%;
-    height: 400px;
-    background-color: #434343;
+    height: 300px;
+    padding-left: 8rem;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
     overflow-x: scroll;
+    position: relative;
 
-    @media (min-width: ${MD}px) {
-        overflow-x: scroll;
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: none !important;
+        background-color: transparent;
+        display: none;
+    }
+    ::-webkit-scrollbar {
+        width: 3px !important;
+        background-color: transparent;
+        display: none;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: transparent;
+        display: none;
     }
 
-    z-index: 1;
+    z-index: 3;
 `;
