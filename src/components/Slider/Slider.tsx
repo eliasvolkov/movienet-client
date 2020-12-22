@@ -1,83 +1,106 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components/macro';
+import { debounce } from 'lodash';
 import { MD } from '../../constants';
 import { SliderItem } from './SliderItem';
 
+const DEBOUNCE_TIME = 300;
+const SCROLL_DIFFERENCE = 2;
+
 export const SimpleSlider = () => {
-    const data = new Array(10).fill(0);
-    const [currentOrder, setCurrentOrder] = useState(1);
-    const [elementsInRow, setElementsInRow] = useState(0);
+    const data = new Array(16).fill(0);
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const divRef = useRef<HTMLDivElement>(null);
+
+    const [elementsInRow, setElementsInRow] = useState(1);
     const [orderOfChosenElement, setOrderOfChosenElement] = useState(0);
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(1);
     const [wrapperWidth, setWrapperWidth] = useState(0);
-    const ELEMENTS_IN_ROW = 3;
 
-    console.log('elementsInRow', elementsInRow);
-
-    const wrapperRef: any = useRef();
-    const divRef: any = useRef();
+    const isRightScrollAvailable = useMemo(() => {
+        const maxCount = Math.ceil(data.length / elementsInRow);
+        return count !== maxCount;
+    }, [count, elementsInRow]);
 
     useEffect(() => {
         calculateElementsInRow();
     }, []);
 
     useEffect(() => {
-        window.addEventListener('resize', calculateElementsInRow);
-        return () =>
-            window.removeEventListener('resize', calculateElementsInRow);
+        window.addEventListener('resize', debouncedCalculation);
+        return () => window.removeEventListener('resize', debouncedCalculation);
     }, []);
 
-    const onRightClick = () => {
-        setCurrentOrder(currentOrder + elementsInRow);
+    const executeRightScroll = () => {
+        if (wrapperRef && wrapperRef.current && divRef && divRef.current) {
+            wrapperRef.current.scrollTo({
+                left: divRef.current.offsetWidth * elementsInRow * count,
+                behavior: 'smooth',
+            });
+        }
+    };
+
+    const executeLeftScroll = () => {
+        if (wrapperRef && wrapperRef.current && divRef && divRef.current) {
+            wrapperRef.current.scrollTo({
+                left:
+                    divRef.current.offsetWidth *
+                    elementsInRow *
+                    (count - SCROLL_DIFFERENCE),
+                behavior: 'smooth',
+            });
+        }
+    };
+
+    const onRightArrow = () => {
+        if (!isRightScrollAvailable) {
+            return;
+        }
+        executeRightScroll();
         setCount(count + 1);
     };
 
-    const onLeftClick = () => {
-        if (currentOrder === 1 || count === 0) {
+    const onLeftArrow = () => {
+        if (count === 1) {
             return;
         }
-        setCurrentOrder(currentOrder - elementsInRow);
+        executeLeftScroll();
         setCount(count - 1);
     };
 
-    const handleClick = (index: number) => {
+    const onItemClick = (index: number) => {
         setOrderOfChosenElement(index);
     };
 
     const calculateElementsInRow = () => {
         if (wrapperRef && wrapperRef.current && divRef && divRef.current) {
             setElementsInRow(
-                Math.ceil(
+                Math.floor(
                     wrapperRef.current.offsetWidth / divRef.current.offsetWidth,
                 ),
             );
             setWrapperWidth(wrapperRef.current.offsetWidth);
         }
     };
+
+    const debouncedCalculation = debounce(
+        calculateElementsInRow,
+        DEBOUNCE_TIME,
+    );
+
     return (
         <div style={{ position: 'relative' }}>
-            <ArrowLeft onClick={onLeftClick} />
-            <ArrowRight onClick={onRightClick} />
+            <ArrowLeft onClick={onLeftArrow} />
+            <ArrowRight onClick={onRightArrow} />
             <Wrapper ref={wrapperRef}>
                 {data.map((item, index) => {
                     const elementOrder = index + 1;
                     return (
                         <div ref={divRef}>
                             <SliderItem
-                                // getWidth={calculateElementsInRow}
                                 orderOfChosenElement={orderOfChosenElement}
-                                handleClick={handleClick}
-                                swipeCoff={count}
-                                elementsInRow={elementsInRow}
-                                order={elementOrder}
-                                shouldTransform={
-                                    currentOrder > 1 &&
-                                    elementOrder < currentOrder
-                                }
-                                shouldAppear={
-                                    currentOrder > 1 &&
-                                    elementOrder >= currentOrder
-                                }>
+                                handleClick={onItemClick}
+                                order={elementOrder}>
                                 {index + 1}
                             </SliderItem>
                         </div>
@@ -115,7 +138,7 @@ const Wrapper = styled.div`
     overflow-x: scroll;
 
     @media (min-width: ${MD}px) {
-        overflow-x: hidden;
+        overflow-x: scroll;
     }
 
     z-index: 1;

@@ -5,41 +5,18 @@ import { mq } from '../../utils/ui';
 
 type Props = {
     children: React.ReactNode;
-    shouldTransform?: boolean;
-    shouldAppear?: boolean;
     order: number;
-    swipeCoff: number;
-    elementsInRow: number;
     handleClick: (index: number) => void;
     orderOfChosenElement: number;
-    // getWidth: (width: number) => void;
-};
-
-const calculateTranslate = (elementsInRow: number) => {
-    return (elementsInRow * 2.65) / 4;
 };
 
 export const SliderItem = ({
     children,
-    shouldTransform,
     order,
-    shouldAppear,
-    swipeCoff,
-    elementsInRow,
     handleClick,
     orderOfChosenElement,
-}: // getWidth,
-Props) => {
+}: Props) => {
     const ref: any = useRef();
-    const [width, setWidth] = useState(0);
-
-    useEffect(() => {
-        setWidth(ref.current.offsetWidth);
-    }, []);
-
-    useEffect(() => {
-        // getWidth(width);
-    }, [width]);
 
     const onClick = () => {
         handleClick(orderOfChosenElement === order ? 0 : order);
@@ -56,17 +33,11 @@ Props) => {
     return (
         <StyledItem
             ref={ref}
-            width={width}
-            order={order}
-            swipeCoff={swipeCoff}
-            elementsInRow={elementsInRow}
-            shouldAppear={shouldAppear}
             isSelected={orderOfChosenElement === order}
             shouldMoveLeft={order < orderOfChosenElement}
             shouldMoveRight={
                 orderOfChosenElement > 0 && order > orderOfChosenElement
             }
-            shouldTransform={shouldTransform}
             onClick={onClick}>
             {children}
         </StyledItem>
@@ -74,16 +45,9 @@ Props) => {
 };
 
 interface IItem {
-    isClicked?: boolean;
     isSelected?: boolean;
-    shouldTransform?: boolean;
-    shouldAppear?: boolean;
     shouldMoveLeft?: boolean;
     shouldMoveRight?: boolean;
-    order: number;
-    width: number;
-    swipeCoff: number;
-    elementsInRow: number;
 }
 const StyledItem = styled.div<IItem>`
     ${mq({
@@ -116,43 +80,13 @@ const StyledItem = styled.div<IItem>`
     font-size: 4rem;
     transition: transform 300ms ease 100ms;
 
-    ${({
-        shouldTransform,
-        order,
-        shouldAppear,
-        swipeCoff,
-        isSelected,
-        elementsInRow,
-        shouldMoveLeft,
-        shouldMoveRight,
-        width,
-    }) => {
-        // if (shouldMoveLeft || shouldMoveRight) {
-        //     return {
-        //         transform: `translateX(${
-        //             shouldMoveLeft ? `${1 * -25}%` : `${1 * 25}%`
-        //         })`,
-        //     };
-        // }
-        if (isSelected && shouldAppear) {
+    ${({ isSelected, shouldMoveLeft, shouldMoveRight }) => {
+        if (shouldMoveLeft || shouldMoveRight) {
             return {
-                transform: `scale(1.5) translateX(-${
-                    swipeCoff * calculateTranslate(elementsInRow) * width
-                }px);`,
+                transform: `translateX(${shouldMoveLeft ? '-25%' : '25%'})`,
             };
         }
-        if (shouldTransform) {
-            return {
-                transform: `translateX(-${order * width}px)`,
-            };
-        }
-        if (shouldAppear) {
-            return {
-                transform: `translateX(-${
-                    swipeCoff * elementsInRow * width
-                }px)`,
-            };
-        }
+
         if (isSelected) {
             return {
                 transform: 'scale(1.5)',
