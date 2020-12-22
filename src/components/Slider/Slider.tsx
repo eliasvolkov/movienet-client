@@ -2,12 +2,13 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components/macro';
 import { debounce } from 'lodash';
 import { SliderItem } from './SliderItem';
+import { ArrowButton } from '../ArrowButton/ArrowButton';
 
 const DEBOUNCE_TIME = 300;
 const SCROLL_DIFFERENCE = 2;
 
 export const SimpleSlider = () => {
-    const data = new Array(16).fill(0);
+    const data = new Array(18).fill(0);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const divRef = useRef<HTMLDivElement>(null);
 
@@ -90,10 +91,14 @@ export const SimpleSlider = () => {
     return (
         <Mask>
             {count > 1 && orderOfChosenElement === 0 && (
-                <ArrowLeft onClick={onLeftArrow}>GO</ArrowLeft>
+                <ArrowLeft>
+                    <ArrowButton onClick={onLeftArrow} isLeft />
+                </ArrowLeft>
             )}
             {isRightScrollAvailable && orderOfChosenElement === 0 && (
-                <ArrowRight onClick={onRightArrow}>GO</ArrowRight>
+                <ArrowRight onClick={onRightArrow}>
+                    <ArrowButton onClick={onRightArrow} />
+                </ArrowRight>
             )}
 
             <Wrapper ref={wrapperRef}>
@@ -104,7 +109,8 @@ export const SimpleSlider = () => {
                             <SliderItem
                                 orderOfChosenElement={orderOfChosenElement}
                                 handleClick={onItemClick}
-                                order={elementOrder}>
+                                order={elementOrder}
+                                isLast={elementOrder === data.length}>
                                 {index + 1}
                             </SliderItem>
                         </div>

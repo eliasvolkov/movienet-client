@@ -8,6 +8,7 @@ type Props = {
     order: number;
     handleClick: (index: number) => void;
     orderOfChosenElement: number;
+    isLast?: boolean;
 };
 
 export const SliderItem = ({
@@ -15,6 +16,7 @@ export const SliderItem = ({
     order,
     handleClick,
     orderOfChosenElement,
+    isLast,
 }: Props) => {
     const ref: any = useRef();
 
@@ -38,6 +40,7 @@ export const SliderItem = ({
             shouldMoveRight={
                 orderOfChosenElement > 0 && order > orderOfChosenElement
             }
+            isLast={isLast}
             onClick={onClick}>
             {children}
         </StyledItem>
@@ -48,6 +51,7 @@ interface IItem {
     isSelected?: boolean;
     shouldMoveLeft?: boolean;
     shouldMoveRight?: boolean;
+    isLast?: boolean;
 }
 const StyledItem = styled.div<IItem>`
     ${mq({
@@ -80,7 +84,7 @@ const StyledItem = styled.div<IItem>`
     font-size: 4rem;
     transition: transform 300ms ease 100ms;
 
-    ${({ isSelected, shouldMoveLeft, shouldMoveRight }) => {
+    ${({ isSelected, shouldMoveLeft, shouldMoveRight, isLast }) => {
         if (shouldMoveLeft || shouldMoveRight) {
             return {
                 transform: `translateX(${shouldMoveLeft ? '-25%' : '25%'})`,
@@ -89,7 +93,7 @@ const StyledItem = styled.div<IItem>`
 
         if (isSelected) {
             return {
-                transform: 'scale(1.5)',
+                transform: `scale(1.5) ${isLast ? 'translateX(-25%)' : ''}`,
             };
         }
         return null;
