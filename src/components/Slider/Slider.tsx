@@ -3,12 +3,18 @@ import styled from 'styled-components/macro';
 import { debounce } from 'lodash';
 import { SliderItem } from './SliderItem';
 import { ArrowButton } from '../ArrowButton/ArrowButton';
+import { H4 } from '../atoms/Texts/H4';
+import { MovieCard } from './MovieCard';
 
 const DEBOUNCE_TIME = 300;
 const SCROLL_DIFFERENCE = 2;
 
-export const SimpleSlider = () => {
-    const data = new Array(18).fill(0);
+type Props = {
+    data: any[];
+    rowTitle: string;
+};
+
+export const SimpleSlider = ({ data, rowTitle }: Props) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const divRef = useRef<HTMLDivElement>(null);
 
@@ -100,8 +106,8 @@ export const SimpleSlider = () => {
                     <ArrowButton onClick={onRightArrow} />
                 </ArrowRight>
             )}
-
-            <Wrapper ref={wrapperRef}>
+            <StyledText>{rowTitle}</StyledText>
+            <Wrapper ref={wrapperRef} isSelected={orderOfChosenElement > 0}>
                 {data.map((item, index) => {
                     const elementOrder = index + 1;
                     return (
@@ -111,7 +117,14 @@ export const SimpleSlider = () => {
                                 handleClick={onItemClick}
                                 order={elementOrder}
                                 isLast={elementOrder === data.length}>
-                                {index + 1}
+                                <MovieCard
+                                    image={item.backdrop_path}
+                                    title={item.title}
+                                    overview={item.overview}
+                                    isInfoShown={
+                                        orderOfChosenElement === elementOrder
+                                    }
+                                />
                             </SliderItem>
                         </div>
                     );
@@ -120,6 +133,12 @@ export const SimpleSlider = () => {
         </Mask>
     );
 };
+
+const StyledText = styled(H4)`
+    font-weight: 100;
+    margin-left: 8.5rem;
+    margin-bottom: -5rem;
+`;
 
 const ArrowRight = styled.div`
     height: 100%;
@@ -130,7 +149,7 @@ const ArrowRight = styled.div`
     position: absolute;
     font-size: 3rem;
     right: 0;
-    top: 50%;
+    top: 48%;
     transform: translate(0, -50%);
     opacity: 0;
     z-index: 0;
@@ -145,7 +164,7 @@ const ArrowLeft = styled.div`
     justify-content: center;
     font-size: 3rem;
     position: absolute;
-    top: 50%;
+    top: 48%;
     transform: translate(0, -50%);
     left: 0;
     opacity: 0;
@@ -156,6 +175,8 @@ const ArrowLeft = styled.div`
 const Mask = styled.div`
     width: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
     &:hover ${ArrowRight} {
         opacity: 1;
         z-index: 7;
@@ -167,11 +188,12 @@ const Mask = styled.div`
     }
     z-index: 1;
 `;
-
-const Wrapper = styled.div`
+interface IWrapper {
+    isSelected?: boolean;
+}
+const Wrapper = styled.div<IWrapper>`
     width: 100%;
-    height: 300px;
-    padding-left: 8rem;
+    padding: 5rem 8rem;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
@@ -192,6 +214,4 @@ const Wrapper = styled.div`
         background-color: transparent;
         display: none;
     }
-
-    z-index: 3;
 `;

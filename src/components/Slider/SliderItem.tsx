@@ -76,13 +76,13 @@ const StyledItem = styled.div<IItem>`
             '18rem',
         ],
     })};
-    background-color: #919191;
     margin-left: 0.4rem;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 4rem;
     transition: transform 300ms ease 100ms;
+    border-radius: 0.8rem;
 
     ${({ isSelected, shouldMoveLeft, shouldMoveRight, isLast }) => {
         if (shouldMoveLeft || shouldMoveRight) {
@@ -98,5 +98,5 @@ const StyledItem = styled.div<IItem>`
         }
         return null;
     }}
-    z-index: 3;
+    z-index: 10;
 `;
