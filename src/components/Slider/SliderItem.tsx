@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components/macro';
 import { useOnClickOutside } from '../../hooks/useClickOutside';
 import { mq } from '../../utils/ui';
@@ -9,6 +9,8 @@ type Props = {
     handleClick: (index: number) => void;
     orderOfChosenElement: number;
     isLast?: boolean;
+    isMobile?: boolean;
+    wasLastClicked?: boolean;
 };
 
 export const SliderItem = ({
@@ -17,6 +19,8 @@ export const SliderItem = ({
     handleClick,
     orderOfChosenElement,
     isLast,
+    isMobile,
+    wasLastClicked,
 }: Props) => {
     const ref: any = useRef();
 
@@ -40,7 +44,8 @@ export const SliderItem = ({
             shouldMoveRight={
                 orderOfChosenElement > 0 && order > orderOfChosenElement
             }
-            isLast={isLast}
+            wasLastClicked={wasLastClicked}
+            isLast={isLast && !isMobile}
             onClick={onClick}>
             {children}
         </StyledItem>
@@ -52,27 +57,28 @@ interface IItem {
     shouldMoveLeft?: boolean;
     shouldMoveRight?: boolean;
     isLast?: boolean;
+    wasLastClicked?: boolean;
 }
 const StyledItem = styled.div<IItem>`
     ${mq({
-        minWidth: [
-            '22rem',
-            '20rem',
-            '20rem',
-            '20rem',
+        width: [
             '22rem',
             '26rem',
-            '28rem',
+            '30rem',
+            '30rem',
+            '30rem',
+            '30rem',
+            '30rem',
             '30rem',
         ],
         height: [
             '12rem',
-            '12rem',
-            '12rem',
-            '12rem',
-            '12rem',
             '16rem',
-            '16rem',
+            '18rem',
+            '18rem',
+            '18rem',
+            '18rem',
+            '18rem',
             '18rem',
         ],
     })};
@@ -84,16 +90,29 @@ const StyledItem = styled.div<IItem>`
     transition: transform 300ms ease 100ms;
     border-radius: 0.8rem;
 
-    ${({ isSelected, shouldMoveLeft, shouldMoveRight, isLast }) => {
+    ${({
+        isSelected,
+        shouldMoveLeft,
+        shouldMoveRight,
+        isLast,
+        wasLastClicked,
+    }) => {
         if (shouldMoveLeft || shouldMoveRight) {
+            if (wasLastClicked) {
+                return {
+                    transform: `translateX(${shouldMoveLeft ? '-55%' : '-4%'})`,
+                };
+            }
             return {
-                transform: `translateX(${shouldMoveLeft ? '-25%' : '25%'})`,
+                transform: `translateX(${shouldMoveLeft ? '-1%' : '49%'})`,
             };
         }
 
         if (isSelected) {
             return {
-                transform: `scale(1.5) ${isLast ? 'translateX(-25%)' : ''}`,
+                transform: `scale(1.5) ${
+                    isLast ? 'translateX(-20%)' : 'translateX(16%)'
+                }`,
             };
         }
         return null;

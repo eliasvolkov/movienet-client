@@ -5,6 +5,7 @@ import { SliderItem } from './SliderItem';
 import { ArrowButton } from '../ArrowButton/ArrowButton';
 import { H4 } from '../atoms/Texts/H4';
 import { MovieCard } from './MovieCard';
+import { isMobile } from '../../utils/ui';
 
 const DEBOUNCE_TIME = 300;
 const SCROLL_DIFFERENCE = 2;
@@ -22,11 +23,19 @@ export const SimpleSlider = ({ data, rowTitle }: Props) => {
     const [orderOfChosenElement, setOrderOfChosenElement] = useState(0);
     const [count, setCount] = useState(1);
     const [wrapperWidth, setWrapperWidth] = useState(0);
+    const [isMobileDevice, setIsMobileDevice] = useState(true);
 
     const isRightScrollAvailable = useMemo(() => {
         const maxCount = Math.ceil(data.length / elementsInRow);
         return count !== maxCount;
     }, [count, elementsInRow]);
+
+    const wasLastClicked = useMemo(() => {
+        return (
+            orderOfChosenElement === elementsInRow * count ||
+            orderOfChosenElement === data.length
+        );
+    }, [count, elementsInRow, orderOfChosenElement]);
 
     useEffect(() => {
         calculateElementsInRow();
@@ -79,6 +88,7 @@ export const SimpleSlider = ({ data, rowTitle }: Props) => {
     };
 
     const calculateElementsInRow = () => {
+        setIsMobileDevice(isMobile());
         if (wrapperRef && wrapperRef.current && divRef && divRef.current) {
             setElementsInRow(
                 Math.floor(
@@ -96,27 +106,38 @@ export const SimpleSlider = ({ data, rowTitle }: Props) => {
 
     return (
         <Mask>
-            {count > 1 && orderOfChosenElement === 0 && (
-                <ArrowLeft>
-                    <ArrowButton onClick={onLeftArrow} isLeft />
-                </ArrowLeft>
+            {!isMobileDevice && (
+                <>
+                    {count > 1 && orderOfChosenElement === 0 && (
+                        <ArrowLeft>
+                            <ArrowButton onClick={onLeftArrow} isLeft />
+                        </ArrowLeft>
+                    )}
+                    {isRightScrollAvailable && orderOfChosenElement === 0 && (
+                        <ArrowRight onClick={onRightArrow}>
+                            <ArrowButton onClick={onRightArrow} />
+                        </ArrowRight>
+                    )}
+                </>
             )}
-            {isRightScrollAvailable && orderOfChosenElement === 0 && (
-                <ArrowRight onClick={onRightArrow}>
-                    <ArrowButton onClick={onRightArrow} />
-                </ArrowRight>
-            )}
+
             <StyledText>{rowTitle}</StyledText>
             <Wrapper ref={wrapperRef} isSelected={orderOfChosenElement > 0}>
                 {data.map((item, index) => {
                     const elementOrder = index + 1;
+                    const isLast =
+                        elementOrder === elementsInRow * count ||
+                        elementOrder === data.length;
+
                     return (
                         <div ref={divRef}>
                             <SliderItem
                                 orderOfChosenElement={orderOfChosenElement}
                                 handleClick={onItemClick}
                                 order={elementOrder}
-                                isLast={elementOrder === data.length}>
+                                isLast={isLast}
+                                wasLastClicked={wasLastClicked}
+                                isMobile={isMobileDevice}>
                                 <MovieCard
                                     image={item.backdrop_path}
                                     title={item.title}
@@ -193,7 +214,7 @@ interface IWrapper {
 }
 const Wrapper = styled.div<IWrapper>`
     width: 100%;
-    padding: 5rem 8rem;
+    padding: 5rem 4rem;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;

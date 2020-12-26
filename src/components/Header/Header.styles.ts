@@ -7,7 +7,7 @@ export const HeaderWrapper = styled.header`
 
     width: 100%;
     height: 8rem;
-    position: absolute;
+    position: fixed;
     top: 0;
     padding: 2rem;
 
@@ -41,7 +41,7 @@ export const AvatarWrapper = styled.div`
     padding: 6rem 4rem;
     @media (min-width: ${IPad}px) {
         min-height: 100vh;
-        position: absolute;
+        position: fixed;
         top: 0;
         right: 0;
         width: 40rem;
