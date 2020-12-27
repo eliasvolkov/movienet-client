@@ -44,7 +44,7 @@ export const SliderItem = ({
             shouldMoveRight={
                 orderOfChosenElement > 0 && order > orderOfChosenElement
             }
-            wasLastClicked={wasLastClicked}
+            wasLastClicked={wasLastClicked && !isMobile}
             isLast={isLast && !isMobile}
             onClick={onClick}>
             {children}

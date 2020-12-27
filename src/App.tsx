@@ -9,7 +9,6 @@ import {
 } from 'react-router-dom';
 import { GlobalStyles } from './GlobalStyles';
 import { SignUpPage } from './features/auth/SignUpPage';
-import { Header } from './components/Header/Header';
 import { HomePage } from './features/home/HomePage';
 
 export const App: React.FC = observer(() => {
@@ -20,8 +19,8 @@ export const App: React.FC = observer(() => {
                 <Switch>
                     <Route path="/signin" component={SignInPage} />
                     <Route path="/signup" component={SignUpPage} />
-                    <Route path="/home" component={HomePage} />
-                    <Redirect from="/" to="/home" />
+                    <Route path="/movies" component={HomePage} />
+                    <Redirect from="/" to="/movies" />
                 </Switch>
             </Router>
         </>

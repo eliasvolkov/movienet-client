@@ -362,7 +362,7 @@ const Wrapper = styled.div`
 
 const Image = styled.div`
     width: 100%;
-    height: 90vh;
+    min-height: 70vh;
     background-color: #2f2f2f;
     margin-bottom: 1.2rem;
 `;

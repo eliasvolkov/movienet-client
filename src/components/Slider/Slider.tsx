@@ -157,8 +157,8 @@ export const SimpleSlider = ({ data, rowTitle }: Props) => {
 
 const StyledText = styled(H4)`
     font-weight: 100;
-    margin-left: 8.5rem;
-    margin-bottom: -5rem;
+    margin-left: 4rem;
+    margin-bottom: -4.5rem;
 `;
 
 const ArrowRight = styled.div`
@@ -219,6 +219,7 @@ const Wrapper = styled.div<IWrapper>`
     align-items: center;
     flex-wrap: nowrap;
     overflow-x: scroll;
+    overflow-y: hidden;
     position: relative;
 
     ::-webkit-scrollbar-track {
