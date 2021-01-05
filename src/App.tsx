@@ -19,8 +19,7 @@ export const App: React.FC = observer(() => {
                 <Switch>
                     <Route path="/signin" component={SignInPage} />
                     <Route path="/signup" component={SignUpPage} />
-                    <Route path="/movies" component={HomePage} />
-                    <Redirect from="/" to="/movies" />
+                    <Route path="/home" component={HomePage} />
                 </Switch>
             </Router>
         </>
