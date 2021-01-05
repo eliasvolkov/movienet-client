@@ -1,5 +1,6 @@
 import { useContext, createContext } from 'react';
 import { types, Instance } from 'mobx-state-tree';
+import persist from 'mst-persist';
 import { Counter } from './Counter';
 import { AuthStore } from '../features/auth/store/AuthStore';
 
@@ -11,6 +12,12 @@ const RootModel = types.model('RootStore', {
 const initialState = RootModel.create({
     counter: {},
     authStore: {},
+});
+
+persist('authStore', initialState.authStore, {
+    storage: localStorage,
+    jsonify: true,
+    blacklist: ['loading'],
 });
 
 export const rootStore = initialState;
