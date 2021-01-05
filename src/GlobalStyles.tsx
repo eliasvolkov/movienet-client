@@ -23,7 +23,7 @@ export const GlobalStyles = createGlobalStyle`
         fontSize: [
             '32.5%',
             '42.5%',
-            '46.5%',
+            '56.5%',
             '48.5%',
             '50.5%',
             '52.5%',

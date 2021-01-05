@@ -1,7 +1,11 @@
 import styled from 'styled-components/macro';
 import { IPad, MD } from '../../constants';
 
-export const HeaderWrapper = styled.header`
+interface IHeaderWrapper {
+    hasBlur?: boolean;
+}
+
+export const HeaderWrapper = styled.header<IHeaderWrapper>`
     display: flex;
     align-items: center;
 
@@ -10,6 +14,7 @@ export const HeaderWrapper = styled.header`
     position: fixed;
     top: 0;
     padding: 2rem;
+    transition: all 0.5s;
 
     z-index: 3;
 
@@ -21,7 +26,29 @@ export const HeaderWrapper = styled.header`
             rgba(17, 17, 19, 0),
             rgba(17, 17, 19, 0.6)
         );
+
+        ${({ hasBlur }) => {
+            if (hasBlur) {
+                return {
+                    backdropFilter: 'blur(12px)',
+                    backgroundColor: 'rgba(31, 33, 37, 0.8)',
+                };
+            }
+
+            return null;
+        }}
     }
+
+    ${({ hasBlur }) => {
+        if (hasBlur) {
+            return {
+                backdropFilter: 'blur(12px)',
+                backgroundColor: 'rgba(31, 33, 37, 0.8)',
+            };
+        }
+
+        return null;
+    }}
 `;
 
 export const LogoWrapper = styled.div`
