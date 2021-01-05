@@ -2,11 +2,14 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { P2 } from 'components/atoms/Texts/P2';
 import { P1 } from 'components/atoms/Texts/P1';
+import { Link } from 'react-router-dom';
 
 type Props = {
     image?: string;
     title: string;
     overview: string;
+    original_language: string;
+    release_date: string;
     isInfoShown?: boolean;
 };
 
@@ -14,6 +17,8 @@ export const MovieCard: React.FC<Props> = ({
     title,
     overview,
     image,
+    original_language,
+    release_date,
     isInfoShown = false,
 }: Props) => {
     return (
@@ -27,8 +32,11 @@ export const MovieCard: React.FC<Props> = ({
             </Background>
             <InfoWrapper isInfoShown={isInfoShown}>
                 <Title>{title}</Title>
-                <Year>2020 | 18+</Year>
+                <Year>
+                    {release_date.slice(0, 4)} | {original_language}
+                </Year>
                 <Overview>{overview}</Overview>
+                <DetailsLink to="/">details</DetailsLink>
             </InfoWrapper>
         </Card>
     );
@@ -102,9 +110,11 @@ export const StyledImage = styled.img`
 const InfoWrapper = styled.div<IInfoWrapper>`
     margin-top: auto;
     z-index: 3;
-    padding: 1rem 1rem 3rem;
+    padding: 1rem;
     opacity: ${({ isInfoShown }) => (isInfoShown ? 1 : 0)};
     transition: 0.5s;
+    display: flex;
+    flex-flow: column wrap;
 `;
 
 const Title = styled(P1)`
@@ -118,17 +128,25 @@ const Year = styled.p`
     font-size: 0.8rem;
     font-weight: 400;
     margin-top: 0.8rem;
+    text-transform: uppercase;
 `;
 
 const Overview = styled(P2)`
-    margin-top: 1.2rem;
+    margin-top: 0.8rem;
     width: 80%;
-    height: 2rem;
-    text-overflow: ellipsis;
     font-size: 0.8rem;
-    word-break: break-word;
-    display: -webkit-box;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+`;
+
+const DetailsLink = styled(Link)`
+    font-family: 'Circe';
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-weight: 800;
+    margin-top: 1.4rem;
 `;

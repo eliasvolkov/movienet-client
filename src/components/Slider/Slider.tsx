@@ -84,6 +84,9 @@ export const SimpleSlider = ({ data, rowTitle }: Props) => {
     };
 
     const onItemClick = (index: number) => {
+        if (isMobileDevice) {
+            return;
+        }
         setOrderOfChosenElement(index);
     };
 
@@ -142,6 +145,8 @@ export const SimpleSlider = ({ data, rowTitle }: Props) => {
                                     image={item.backdrop_path}
                                     title={item.title}
                                     overview={item.overview}
+                                    original_language={item.original_language}
+                                    release_date={item.release_date}
                                     isInfoShown={
                                         orderOfChosenElement === elementOrder
                                     }
