@@ -1,6 +1,7 @@
 import { flow, types } from 'mobx-state-tree';
 import { SignInBody, SignUpBody } from '../../../types/auth';
 import { postSignIn, postSignUp } from '../api/post';
+import { TOKEN_KEY } from '../../../constants';
 
 export const AuthStore = types
     .model('AuthStore', {
@@ -27,6 +28,7 @@ export const AuthStore = types
             try {
                 self.loading = true;
                 const { token } = yield postSignIn(values);
+                localStorage.setItem(TOKEN_KEY, token);
                 self.token = token;
                 onSuccess();
             } catch (error) {

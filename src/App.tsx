@@ -1,15 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { SignInPage } from 'features/auth/SignInPage';
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    Redirect,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { GlobalStyles } from './GlobalStyles';
 import { SignUpPage } from './features/auth/SignUpPage';
 import { HomePage } from './features/home/HomePage';
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 
 export const App: React.FC = observer(() => {
     return (
@@ -19,7 +15,8 @@ export const App: React.FC = observer(() => {
                 <Switch>
                     <Route path="/signin" component={SignInPage} />
                     <Route path="/signup" component={SignUpPage} />
-                    <Route path="/home" component={HomePage} />
+                    <PrivateRoute path="/home" component={HomePage} />
+                    <PrivateRoute path="/movies" component={HomePage} />
                 </Switch>
             </Router>
         </>
