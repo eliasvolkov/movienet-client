@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 import { Link } from 'react-router-dom';
+import * as yup from 'yup';
 import { TextInput } from '../../../../components/Form/Input/Input.stories';
 import { Button } from '../../../../components/Button/Button';
 import {
@@ -12,20 +13,25 @@ import {
     StyledH3,
     StyledP2,
 } from './Forms.styles';
+import { SignInBody } from '../../../../types/auth';
 
 type Props = {
-    onSubmit: (values: any) => void;
+    onSubmit: (values: SignInBody) => void;
+    initialValues: SignInBody;
 };
 
-export const SignInForm = ({ onSubmit }: Props) => {
+export const SignInForm = ({ onSubmit, initialValues }: Props) => {
+    const signInValidationSchema = yup.object().shape({
+        email: yup.string().email('emailNotValid').required('emailRequired'),
+        password: yup.string().required('passReq'),
+    });
     return (
         <Formik
-            initialValues={{
-                email: '',
-                password: '',
-            }}
-            onSubmit={onSubmit}>
+            initialValues={initialValues}
+            onSubmit={onSubmit}
+            validationSchema={signInValidationSchema}>
             {({ handleChange, handleSubmit, values, errors, touched }) => {
+                const isDisabled = !values.email || !values.password;
                 return (
                     <Form onSubmit={handleSubmit}>
                         <FormWrapper>
@@ -33,6 +39,10 @@ export const SignInForm = ({ onSubmit }: Props) => {
                             <TextInput
                                 value={values.email}
                                 onChange={handleChange('email')}
+                                errorMessage={errors.email}
+                                isErrorShown={
+                                    !!errors.email?.length && touched.email
+                                }
                                 placeholder="E-mail"
                             />
                             <InputWrapper>
@@ -40,13 +50,18 @@ export const SignInForm = ({ onSubmit }: Props) => {
                                     value={values.password}
                                     onChange={handleChange('password')}
                                     placeholder="Password"
+                                    errorMessage={errors.password}
+                                    isErrorShown={
+                                        !!errors.password?.length &&
+                                        touched.password
+                                    }
                                     type="password"
                                 />
                             </InputWrapper>
                             <ButtonWrapper>
                                 <Button
                                     onClick={handleSubmit}
-                                    disabled
+                                    disabled={isDisabled}
                                     themeType="secondary">
                                     Войти
                                 </Button>

@@ -39,7 +39,7 @@ export const Scroll = styled.div<INavWrapper>`
     overflow-y: scroll;
     position: fixed;
     width: 100%;
-    bottom: 0;
+    top: 0;
     left: 0;
     display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
     flexdirection: 'column';

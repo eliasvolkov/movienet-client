@@ -23,7 +23,7 @@ export const GlobalStyles = createGlobalStyle`
         fontSize: [
             '32.5%',
             '42.5%',
-            '46.5%',
+            '56.5%',
             '48.5%',
             '50.5%',
             '52.5%',
@@ -37,6 +37,6 @@ export const GlobalStyles = createGlobalStyle`
       font-family: 'Proxima Nova Rg', sans-serif;
       font-weight: normal;
       color: #fff;
-      //overflow: hidden;
+      overflow-x: hidden;
   }
 `;

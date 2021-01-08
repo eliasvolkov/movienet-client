@@ -7,3 +7,6 @@ export const COLORS = {
     DARK: '#2a2929',
     BGC: '#1f2125',
 };
+
+export const API_BASE = 'http://localhost:5000';
+export const TOKEN_KEY = 'token';
