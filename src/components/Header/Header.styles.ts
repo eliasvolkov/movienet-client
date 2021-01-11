@@ -66,12 +66,13 @@ export const AvatarWrapper = styled.div`
     flex-direction: column;
     background-color: rgba(31, 33, 37, 0.92);
     padding: 6rem 4rem;
+    z-index: 10;
     @media (min-width: ${IPad}px) {
         min-height: 100vh;
         position: fixed;
         top: 0;
         right: 0;
-        width: 40rem;
+        width: 45rem;
         padding: 6rem;
         backdrop-filter: blur(12px);
         background-color: rgba(31, 33, 37, 0.8);
